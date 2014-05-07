@@ -7,12 +7,25 @@
      * Get whether given passphrase is secure enough.
      * 
      * @param  {String}  str The input passphrase.
-     * @return {Boolean} true if secure enough; false otherwise.
+     * @throws Error If passphrase isn't secure enough. Error message contains 
+     * explanation.
      */
-    isSecure: function(str) {
-      // from Stanford passphrase policy
-      // see http://itservices.stanford.edu/service/accounts/passwords/quickguide
-      return 16 <= (str || '').length;
+    check: function(str) {
+      if ('string' !== typeof(str)) {
+        throw new Error('Passphrase must be a string');
+      }
+
+      /* 
+      From Stanford passphrase policy
+
+      http://itservices.stanford.edu/service/accounts/passwords/quickguide
+
+      We keep it simple by just mandating a minimum length.
+      */
+     
+      if (16 > str.length) {
+        throw new Error('Passphrase must be atleast 16 characters');
+      }
     }
   };
 
